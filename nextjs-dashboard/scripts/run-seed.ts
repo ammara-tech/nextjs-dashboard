@@ -6,11 +6,13 @@ import { users, customers, invoices, revenue } from '../app/lib/placeholder-data
 // Explicitly load your environment variables 
 config({ path: '.env' }); // or '.env.local' depending on your setup
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require',
+prepare: false
+ });
 
 async function main() {
   console.log('--- Starting direct database seed ---');
-  
+
   // 1. Seed Users
   await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
   await sql`
